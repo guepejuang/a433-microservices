@@ -1,0 +1,30 @@
+# Menggunakan docker-compose versi 3
+version: "3"
+
+# Menentukan Services yang akan digunakan
+services:
+  # Membuat service untuk aplikasi
+  item-app:
+    # Memilih image dari github packages
+    image: docker.pkg.github.com/guepejuang/a433-microservices/item-app:v1
+    # Melakukan port mapping agar dapat diakses dari port 80 di host
+    ports:
+      - "80:8080"
+      # memastikan item-db sudah berjalan terlebih dahulu sebelum item-app
+    depends_on:
+      - item-db
+      # Menerapkan restart Policy
+    restart: always
+  # Membuat service untuk database mongodb
+  item-db:
+    #  Memilih image dari Docker Hub dengan nama mongo versi 3
+    image: mongo:3
+    # Menentukan volumes  yang akan digunakan oleh container database
+    volumes:
+      - app-db:/data/db
+      # Menerapkan restart Policy
+    restart: always
+
+# Konfigurasi Volumes
+volumes:
+  app-db:
