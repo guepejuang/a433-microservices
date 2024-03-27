@@ -10,7 +10,7 @@ on:
 # mendefinisikan job yang akan dilakukan workflow
 jobs:
   karsajobs-ui-ci:
-    name: KarsaJobs-ui-Test-Build-Push
+    name: KarsaJobs-ui-Lint-Build-Push
 
     # nama env yang digunakan
     environment: karsajobs-ui
