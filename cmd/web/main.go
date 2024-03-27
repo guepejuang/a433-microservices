@@ -45,16 +45,21 @@ func main() {
 }
 
 func openDB() (*mongo.Client, error) {
-	client, err := mongo.NewClient(options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s:27017/?authsource=admin", os.Getenv("MONGO_USER"), os.Getenv("MONGO_PASS"), os.Getenv("MONGO_HOST"))))
-	if err != nil {
-		return nil, err
-	}
+    // Logging nilai variabel lingkungan
+    fmt.Println("Nilai MONGO_USER:", os.Getenv("MONGO_USER"))
+    fmt.Println("Nilai MONGO_PASS:", os.Getenv("MONGO_PASS"))
+    fmt.Println("Nilai MONGO_HOST:", os.Getenv("MONGO_HOST"))
 
-	ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
+    client, err := mongo.NewClient(options.Client().ApplyURI(fmt.Sprintf("mongodb://%s:%s@%s:27017/?authsource=admin", os.Getenv("MONGO_USER"), os.Getenv("MONGO_PASS"), os.Getenv("MONGO_HOST"))))
+    if err != nil {
+        return nil, err
+    }
 
-	if err = client.Connect(ctx); err != nil {
-		return nil, err
-	}
+    ctx, _ := context.WithTimeout(context.Background(), 10*time.Second)
 
-	return client, nil
+    if err = client.Connect(ctx); err != nil {
+        return nil, err
+    }
+
+    return client, nil
 }
