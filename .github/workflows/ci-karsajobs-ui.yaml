@@ -1,5 +1,5 @@
 # GitHub Actions Workflow
-name: CI for KarsaJobs-ui Backend (API)
+name: CI for KarsaJobs-ui (Frontend)
 
 # workflow akan ter triger ketika terjadi perubahan pada branch karsajobs-ui
 on:
