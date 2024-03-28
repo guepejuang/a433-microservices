@@ -1,0 +1,41 @@
+# GitHub Actions Workflow
+name: Shipping Service App CI
+
+# workflow akan ter triger ketika terjadi perubahan pada branch shipping-service
+on:
+  push:
+    branches:
+      - shipping-service
+
+# mendefinisikan job yang akan dilakukan workflow
+jobs:
+  karsajobs-ci:
+    name: Lint-Build-Push
+
+    # nama env yang digunakan
+    environment: shipping-svc-prod
+
+    # Untuk menjalankan job menggunakan ubuntu versi terbaru
+    runs-on: ubuntu-latest
+
+    # langkah-langkah yang akan dikerjakan
+    steps:
+
+      # Pertama, checkout repo terlebih dahulu
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      
+      # Kedua, proses untuk menginstal hadolint dan menjalankannya terhadap berkas Dockerfile
+      - name: Runs Hadolint Dockerfile linting tool
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: "Dockerfile"
+
+      # Ketiga, menjalankan proses build dan push image
+      - name: Build and Push Docker Image
+        env:
+          # personal access token disimpan pada repository secrets GitHub
+          PASSWORD_DOCKER_HUB: ${{ secrets.PASSWORD_DOCKER_HUB }}
+        run: |
+          export PASSWORD_DOCKER_HUB=$PASSWORD_DOCKER_HUB
+          bash ./build_push_shipping_service.sh
