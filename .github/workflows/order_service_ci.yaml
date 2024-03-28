@@ -35,7 +35,7 @@ jobs:
       - name: Build and Push Docker Image
         env:
           # personal access token disimpan pada repository secrets GitHub
-          GHCR_PAT_TOKEN: ${{ secrets.GHCR_PAT_TOKEN }}
+          PASSWORD_DOCKER_HUB: ${{ secrets.PASSWORD_DOCKER_HUB }}
         run: |
-          export GHCR_PAT_TOKEN=$GHCR_PAT_TOKEN
+          export PASSWORD_DOCKER_HUB=$PASSWORD_DOCKER_HUB
           bash ./build_push_order_service.sh
